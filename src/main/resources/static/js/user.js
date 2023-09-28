@@ -24,9 +24,22 @@ let userObject = {
 			data : JSON.stringify(user), // user 객체 -> JSON 형식
 			contentType : "application/json; charset=UTF-8" // 서버로 보낼때
 		}).done(function(response){
-
-			alert(response.data);
-			location.href = "/";
+			
+			let status = response["status"];
+			
+			if(status == 200){
+				let message = response["data"];
+				alert(message);
+				location.href = "/";
+			}else{
+				
+				let warn = "";
+				let errors = reponse["data"];
+				if(errors.username != null) warn = warn + errors.username + "\n";
+				if(errors.password != null) warn = warn + errors.password + "\n";
+				if(errors.email != null) warn = warn + errors.email + "\n";
+				alert(warn);
+			}
 			
 		}).fail(function(error){
 		

@@ -1,9 +1,7 @@
 package com.ql.blog.domain;
 
 import java.sql.Timestamp;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,10 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -24,35 +19,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
-public class Post {
+public class Reply {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id; // 댓글 일련번호
 	
-	@Column(nullable = false, length = 100)
-	private String title;
-	
-	@Lob
-	@Column(nullable = false)
-	private String content;
+	@Column(nullable = false, length = 200)
+	private String content; // 댓글 내용
 	
 	@CreationTimestamp
 	private Timestamp createDate;
-
-	private int cnt;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userid")
+	@JoinColumn(name = "userId")
 	private User user;
 	
-	@OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	@OrderBy("id desc")
-	private List<Reply> replyList;
-	
-	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "postId")
+	private Post post;
+
 }

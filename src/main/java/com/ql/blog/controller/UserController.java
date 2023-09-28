@@ -1,15 +1,24 @@
 
 package com.ql.blog.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ql.blog.domain.User;
+import com.ql.blog.dto.UserDTO;
 import com.ql.blog.persistence.ResponseDTO;
 import com.ql.blog.service.UserService;
 
@@ -18,6 +27,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	// 회원가입
 	@GetMapping("/auth/insertUser")
@@ -30,10 +42,9 @@ public class UserController {
 	
 	// 회원가입 처리
 	@PostMapping("/auth/insertUser")
-	public @ResponseBody ResponseDTO<?> insertUser(@RequestBody User user){
-		System.out.println(user);
-		System.out.println(user.getUsername());
+	public @ResponseBody ResponseDTO<?> insertUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult){
 		
+		User user = modelMapper.map(userDTO, User.class);
 		User findUser = userService.getUser(user.getUsername()); // 중복회원 체크
 		
 		if(findUser.getUsername() == null) {

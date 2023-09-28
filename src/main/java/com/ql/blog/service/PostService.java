@@ -36,4 +36,21 @@ public class PostService {
 	public Post getPost(int id) {
 		return postRepository.findById(id).get();
 	}
+	
+	// 포스트 수정
+	@Transactional
+	public void updatePost(Post post) {
+		
+		Post findPost = postRepository.findById(post.getId()).get();
+		
+		findPost.setTitle(post.getTitle());
+		findPost.setContent(post.getContent());
+	}
+	
+	// 포스트 삭제
+	@Transactional
+	public void deletePost(int id) {
+		
+		postRepository.deleteById(id);
+	}
 }
