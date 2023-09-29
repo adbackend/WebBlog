@@ -31,6 +31,13 @@ public class UserController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	// 로그인 페이지
+	@GetMapping("/auth/login")
+	public String login() {
+		
+		return "system/login";
+	}
+	
 	// 회원가입
 	@GetMapping("/auth/insertUser")
 	public String inserUser() {

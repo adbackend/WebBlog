@@ -46,7 +46,9 @@ public class BlogWebMvcConfiguration implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new AuthenticateInterceptor()).addPathPatterns("/", "/post/**");
+		
+//		registry.addInterceptor(new AuthenticateInterceptor()).addPathPatterns("/", "/post/**");
+		
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 

@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<!-- 로그인 인증에 성공한 브라우저에만 접근할 수 있는 영역 -->
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication var="principal" property="principal"/>
+</sec:authorize>
 
 <link href="/webjars/bootstrap/5.2.3/css/bootstrap.css" rel="stylesheet">
 <script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
@@ -17,13 +23,13 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="mynavbar">
-			<c:if test="${sessionScope.principal == null}">
+			<c:if test="${principal == null}">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="/auth/login">로그인</a></li>
 					<li class="nav-item"><a class="nav-link" href="/auth/insertUser">회원가입</a></li>
 				</ul>
 			</c:if>
-			<c:if test="${sessionScope.principal != null}">
+			<c:if test="${principal != null}">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="/user/updateUser">회원 상세</a></li>
 					<li class="nav-item"><a class="nav-link" href="/post/insertPost">포스트 등록</a></li>

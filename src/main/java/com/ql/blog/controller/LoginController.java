@@ -14,7 +14,7 @@ import com.ql.blog.domain.User;
 import com.ql.blog.persistence.ResponseDTO;
 import com.ql.blog.service.UserService;
 
-@Controller
+//@Controller
 public class LoginController {
 	
 	@Autowired
