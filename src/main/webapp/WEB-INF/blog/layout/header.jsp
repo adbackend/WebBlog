@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <link href="/webjars/bootstrap/5.2.3/css/bootstrap.css" rel="stylesheet">
 <script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>

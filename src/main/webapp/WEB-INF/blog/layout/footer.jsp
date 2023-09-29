@@ -5,4 +5,11 @@
 <div class="mt-5 p-4 text-center">
 	<p>Created by Gurum</p>
 	<p>연락처 : 010-1234-1234, 주소지 : 서울시 강남구 대치동</p>
+	<a href="/auth/login?lang=ko">
+		<img height="38px" src="/image/korea.png">
+	</a>
+	<a href="/auth/login?lang=en">
+		<img height="38px" src="/image/english.jpg">
+	</a>
+	
 </div>
