@@ -9,17 +9,20 @@ import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ql.blog.domain.User;
 import com.ql.blog.dto.UserDTO;
 import com.ql.blog.persistence.ResponseDTO;
+import com.ql.blog.security.UserDetailsImpl;
 import com.ql.blog.service.UserService;
 
 @Controller
@@ -65,5 +68,22 @@ public class UserController {
 		}
 		
 	} 
+	
+	// 회원정보 수정 화면
+	@GetMapping("/user/updateUser")
+	public String updateUser() {
+		return "user/updateUser";
+	}
+	
+	// 회원정보 수정 처리
+	@PutMapping("/user")
+	public @ResponseBody ResponseDTO<?> updateUser(@RequestBody User user, @AuthenticationPrincipal UserDetailsImpl principal){
+		
+		// 회원정보 수정과 동시에 세션 갱신
+		principal.setUser(userService.updateUser(user));
+		
+		return new ResponseDTO<>(HttpStatus.OK.value(), user.getUsername() + "님 수정 완료");
+	}
+	
 	
 }

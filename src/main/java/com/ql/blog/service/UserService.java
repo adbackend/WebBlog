@@ -45,4 +45,18 @@ public class UserService {
 		
 		return findUser;
 	}
+	
+	// 회원 정보 수정
+	@Transactional
+	public User updateUser(User user) {
+		
+		User findUser = userRepository.findById(user.getId()).get();
+		
+		findUser.setUsername(user.getUsername());
+		findUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		findUser.setEmail(user.getEmail());
+		
+		return findUser;
+		
+	}
 }

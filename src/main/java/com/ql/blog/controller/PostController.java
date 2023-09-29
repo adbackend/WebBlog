@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import com.ql.blog.domain.Post;
 import com.ql.blog.domain.User;
 import com.ql.blog.dto.PostDTO;
 import com.ql.blog.persistence.ResponseDTO;
+import com.ql.blog.security.UserDetailsImpl;
 import com.ql.blog.service.PostService;
 
 @Controller
@@ -53,14 +55,14 @@ public class PostController {
 	
 	// 포스트 등록 처리
 	@PostMapping("/post")
-	public @ResponseBody ResponseDTO<?> insertPost(@Valid @RequestBody PostDTO postDTO, BindingResult bindingResult, HttpSession session){
+	public @ResponseBody ResponseDTO<?> insertPost(@Valid @RequestBody PostDTO postDTO, 
+												   BindingResult bindingResult, 
+												   @AuthenticationPrincipal UserDetailsImpl principal){
 		
 		Post post = modelMapper.map(postDTO, Post.class);
 		
 		// Post 객체를 영속화하기 전 연관된 User 엔티티 설정
-		User principal = (User)session.getAttribute("principal");
-		
-		post.setUser(principal);
+		post.setUser(principal.getUser());
 		post.setCnt(0);
 		
 		postService.insertPost(post);

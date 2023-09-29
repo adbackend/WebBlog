@@ -18,6 +18,11 @@ let postObject = {
 			_this.deletePost();
 		});
 		
+		// 회원정보 수정
+		$("#btn-update").on("click", ()=>{
+			_this.updateUser();
+		});
+		
 	},
 	
 	// 글 등록
@@ -107,7 +112,35 @@ let postObject = {
 			let message = error["data"];
 			alert("문제 발생 : " + message);
 		})
-	}
+	},
+	
+	// 회원정보 수정
+	updateUser : function(){
+		
+		let user = {
+			id : document.getElementById("id").value,
+			username : document.getElementById("username").value,
+			password : document.getElementById("password").value,
+			email : document.getElementById("email").value
+		}
+		
+		$.ajax({
+			type : "PUT",
+			url : "/user",
+			data : JSON.stringify(user),
+			contentType : "application/json; charset=utf-8"
+		}).done(function(reponse){
+			
+			let message = response["data"];
+			alert(message);
+			location = "/";
+			
+		}).fail(function(error){
+			let message = error["data"];
+			alert("문제 발생 : " + message);
+		});
+	
+	},
 	
 	
 	
